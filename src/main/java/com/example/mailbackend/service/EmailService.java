@@ -1,6 +1,7 @@
 package com.example.mailbackend.service;
 
 import com.example.mailbackend.dto.EmailDTO;
+import com.example.mailbackend.dto.EmailDetailDTO;
 import com.example.mailbackend.dto.FindingEmailDTO;
 import com.example.mailbackend.model.Email;
 import com.example.mailbackend.repository.EmailRepository;
@@ -29,7 +30,6 @@ public class EmailService {
 
         return responseObject;
     }
-
     public EmailDTO mapToDTO(Email email){
         EmailDTO emailDTO = new EmailDTO();
 
@@ -38,5 +38,11 @@ public class EmailService {
         emailDTO.setSubject(emailDTO.getSubject());
 
         return emailDTO;
+    }
+
+    public EmailDetailDTO findEmailById(Long id){
+        Email email = emailRepository.findById(id).get();
+        EmailDetailDTO emailDetailDTO = EmailDetailDTO.mapToDTO(email);
+        return emailDetailDTO;
     }
 }
