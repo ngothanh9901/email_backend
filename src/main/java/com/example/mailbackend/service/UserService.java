@@ -31,6 +31,10 @@ public class UserService {
 
     }
 
+    public User findById(Long id){
+        return userRepository.findById(id).get();
+    }
+
     public ResponseObject<UserDTO> findUser(FindingUserDTO payload, Pageable pageable) {
         Page<User> userPage = userRepository.findUser(payload, pageable);
         List<UserDTO> content = userPage.getContent().stream().map(u->mapToDTO(u)).collect(Collectors.toList());
