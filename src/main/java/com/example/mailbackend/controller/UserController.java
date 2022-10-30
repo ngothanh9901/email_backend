@@ -3,6 +3,7 @@ package com.example.mailbackend.controller;
 import com.example.mailbackend.dto.FindingUserDTO;
 import com.example.mailbackend.dto.UserDTO;
 import com.example.mailbackend.dto.payload.UserPayload;
+import com.example.mailbackend.model.User;
 import com.example.mailbackend.repository.UserRepository;
 import com.example.mailbackend.response.ResponseObject;
 import com.example.mailbackend.service.UserService;
@@ -44,6 +45,9 @@ public class UserController {
     public ResponseObject<UserDTO> findListJob(@RequestBody FindingUserDTO findingUserDTO) {
         Pageable pageable = DataUtils.getPageableForListLimit(findingUserDTO.getPageNumber(),findingUserDTO.getPageSize(),findingUserDTO.getSortDir(),findingUserDTO.getSortBy());
         return userService.findUser(findingUserDTO,pageable);
+    }
+    public User update(){
+        return null;
     }
 }
 
