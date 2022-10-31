@@ -40,9 +40,9 @@ public class EmailService {
     public EmailDTO mapToDTO(Email email){
         EmailDTO emailDTO = new EmailDTO();
 
-        emailDTO.setId(emailDTO.getId());
+        emailDTO.setId(email.getId());
         emailDTO.setFromEmail(email.getFromEmail());
-        emailDTO.setSubject(emailDTO.getSubject());
+        emailDTO.setSubject(email.getSubject());
 
         return emailDTO;
     }
