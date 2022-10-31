@@ -61,10 +61,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
 
 
-        if (!checkAccessToken(token)) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+//        if (!checkAccessToken(token)) {
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
 
         setAuthenticationContext(token, request);
         filterChain.doFilter(request, response);

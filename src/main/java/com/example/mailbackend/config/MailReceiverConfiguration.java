@@ -6,21 +6,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-//import org.springframework.integration.annotation.InboundChannelAdapter;
-//import org.springframework.integration.annotation.Poller;
-//import org.springframework.integration.annotation.ServiceActivator;
-//import org.springframework.integration.channel.DirectChannel;
-//import org.springframework.integration.config.EnableIntegration;
-//import org.springframework.integration.mail.ImapMailReceiver;
-//import org.springframework.integration.mail.MailReceiver;
-//import org.springframework.integration.mail.MailReceivingMessageSource;
-//import org.springframework.messaging.Message;
+import org.springframework.integration.annotation.InboundChannelAdapter;
+import org.springframework.integration.annotation.Poller;
+import org.springframework.integration.annotation.ServiceActivator;
+import org.springframework.integration.channel.DirectChannel;
+import org.springframework.integration.config.EnableIntegration;
+import org.springframework.integration.mail.ImapMailReceiver;
+import org.springframework.integration.mail.MailReceiver;
+import org.springframework.integration.mail.MailReceivingMessageSource;
+import org.springframework.messaging.Message;
 
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 @Configuration
-//@EnableIntegration
+@EnableIntegration
 public class MailReceiverConfiguration {
 
 //    private static final Logger log = LoggerFactory.getLogger(MailReceiverConfiguration.class);
