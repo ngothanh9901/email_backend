@@ -17,9 +17,13 @@ public class Email {
 
     private String fromEmail;
 
+    @Lob
     private String subject;
 
+    @Lob
     private String body;
+
+    private Long emailNumber;
 
     @ManyToOne
     @JoinColumn(name = "user_id",referencedColumnName = "id")
@@ -28,4 +32,11 @@ public class Email {
     @ManyToOne
     @JoinColumn(name = "lable_id",referencedColumnName = "id")
     private Lable lable;
+
+    public Email(String fromEmail,String subject,String body,User user){
+        this.fromEmail = fromEmail;
+        this.subject = subject;
+        this.body = body;
+        this.user = user;
+    }
 }

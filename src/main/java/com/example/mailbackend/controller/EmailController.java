@@ -26,7 +26,7 @@ public class EmailController {
     private EmailService emailService;
 
     @PostMapping("/")
-    public ResponseObject<EmailDTO> findListEmail(@RequestBody FindingEmailDTO payload) {
+    public ResponseObject<EmailDTO> findListEmail(@RequestBody FindingEmailDTO payload) throws MessagingException, IOException {
         Pageable pageable = DataUtils.getPageableForListLimit(payload.getPageNumber(),payload.getPageSize(),payload.getSortDir(),payload.getSortBy());
         return emailService.findEmail(payload,pageable);
     }
