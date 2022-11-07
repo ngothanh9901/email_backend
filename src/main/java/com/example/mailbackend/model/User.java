@@ -26,6 +26,8 @@ public class User extends UserDateAudit {
 
     private int loginFailedTimes = 0;
 
+    private int emailNumber = 1;
+
     public User (String name,String username,String password,String appPassword){
         this.name = name;
         this.username = username;

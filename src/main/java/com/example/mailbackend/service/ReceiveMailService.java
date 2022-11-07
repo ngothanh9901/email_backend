@@ -4,6 +4,6 @@ import javax.mail.internet.MimeMessage;
 
 public interface ReceiveMailService {
 
-    void handleReceivedMail(MimeMessage message);
+//    void handleReceivedMail(MimeMessage message);
 
 }
