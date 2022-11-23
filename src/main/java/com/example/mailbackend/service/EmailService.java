@@ -1,11 +1,11 @@
 package com.example.mailbackend.service;
 
-import com.example.mailbackend.dto.EmailDTO;
-import com.example.mailbackend.dto.EmailDetailDTO;
-import com.example.mailbackend.dto.FindingEmailDTO;
+import com.example.mailbackend.dto.*;
 import com.example.mailbackend.model.Email;
+import com.example.mailbackend.model.Lable;
 import com.example.mailbackend.model.User;
 import com.example.mailbackend.repository.EmailRepository;
+import com.example.mailbackend.repository.LableRespository;
 import com.example.mailbackend.repository.UserRepository;
 import com.example.mailbackend.response.ResponseObject;
 import com.example.mailbackend.security.SecurityUtils;
@@ -16,7 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.*;
+import org.springframework.http.server.reactive.HttpHandler;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.activation.DataHandler;
 import javax.mail.*;
@@ -35,6 +38,12 @@ public class EmailService {
     private EmailRepository emailRepository;
 
     @Autowired
+    private LableRespository lableRespository;
+
+
+    private RestTemplate rest = new RestTemplate();
+
+    @Autowired
     private UserRepository userRepository;
     public ResponseObject<EmailDTO> findEmail(FindingEmailDTO payload, Pageable pageable) throws MessagingException, IOException {
 
@@ -50,6 +59,23 @@ public class EmailService {
             List<Email> listEmails = getEmailFromSTMP();
             if(listEmails!=null){
                 for(Email email : listEmails){
+
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.setContentType(MediaType.APPLICATION_JSON);
+
+                    EmailModelDTO emailModelDTO = new EmailModelDTO(email.getBody());
+
+                    HttpEntity<EmailModelDTO> entity = new HttpEntity<>(emailModelDTO, headers);
+                    ResponseEntity<EmailStaticDTO> respObj =rest.exchange("http://localhost:5000/predict", HttpMethod.POST, entity, EmailStaticDTO.class);
+
+                    System.out.println(respObj);
+
+                    Lable lable = lableRespository.findByName(respObj.getBody().getLabel());
+
+
+
+                    email.setLable(lable);
+
                     emailRepository.save(email);
                 }
                 user.setEmailNumber(user.getEmailNumber()+listEmails.size());
@@ -72,6 +98,7 @@ public class EmailService {
         emailDTO.setId(email.getId());
         emailDTO.setFromEmail(email.getFromEmail());
         emailDTO.setSubject(email.getSubject());
+        emailDTO.setLabel(email.getLable().getName());
 
         return emailDTO;
     }
@@ -103,7 +130,8 @@ public class EmailService {
         folder.open(Folder.READ_WRITE);
 
         try {
-            Message messages[] = folder.getMessages(user.getEmailNumber()+1,2);
+            System.out.println("Count new message: "+folder.getMessageCount());
+            Message messages[] = folder.getMessages(user.getEmailNumber()+1,6);
 
             for (int i = 0; i < messages.length; ++i) {
                 log.info("Email Number " + (i + 1));

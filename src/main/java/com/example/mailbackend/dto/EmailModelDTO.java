@@ -7,9 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmailDTO {
-    private Long id;
-    private String fromEmail;
-    private String subject;
-    private String label;
+public class EmailModelDTO {
+    String email;
 }
